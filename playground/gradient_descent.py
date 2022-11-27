@@ -10,7 +10,7 @@ def gradient_descent(input: float, steps: int=20, alpha: float=0.1):
 
   for i in range(steps):
     x -= alpha * df(x)
-    print(x)
+    print(f"Iteration {i}: {x}")
   
   return x
 
