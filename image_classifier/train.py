@@ -4,19 +4,14 @@ import torch.optim as optim
 import torchvision
 
 import cnn
-import loader
+from const import classes, PATH
+from loader import Loader
 import visualiser
 
-# https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html
-
-batch_size = 4
-
-trainloader = loader.load(batch_size)
-
-classes = ('plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse'
-  'ship', 'truck')
-
 if __name__=="__main__":
+  loader = Loader(batch_size=4)
+  trainloader = loader.load_train()
+
   # # Get some random training images
   # dataiter = iter(trainloader)
   # images, labels = next(dataiter)
@@ -53,5 +48,4 @@ if __name__=="__main__":
 
   print('Finished Training')
 
-  PATH = './cifar_net.pth'
   torch.save(net.state_dict(), PATH)
