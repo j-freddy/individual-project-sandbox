@@ -4,8 +4,14 @@
 
 ## Train
 
-- Run `train.py`
+```bash
+cd image_classifier
+python train.py
+```
 
 ## Test
 
-- Run `test.py`
+```bash
+cd image_classifier
+python test.py
+```
