@@ -1,9 +1,13 @@
 import torch
 import torchvision
 import torchvision.transforms as transforms
+import ssl
 
 class Loader:
   def __init__(self, batch_size):
+    # Turn off SSL verification
+    ssl._create_default_https_context = ssl._create_unverified_context
+
     self.batch_size = batch_size
     self.transform = transforms.Compose([
     transforms.ToTensor(),
