@@ -4,20 +4,19 @@ from torchvision.datasets import MNIST
 from torchvision.transforms import ToTensor
 import pytorch_lightning as pl
 
-# define any number of nn.Modules (or use your current ones)
+# Defining the encoder and decoder neural network models
+# (This is not important)
 encoder = nn.Sequential(nn.Linear(28 * 28, 64), nn.ReLU(), nn.Linear(64, 3))
 decoder = nn.Sequential(nn.Linear(3, 64), nn.ReLU(), nn.Linear(64, 28 * 28))
 
-# define the LightningModule
 class LitAutoEncoder(pl.LightningModule):
   def __init__(self, encoder, decoder):
     super().__init__()
     self.encoder = encoder
     self.decoder = decoder
 
+  # Defines 1 iteration of train loop
   def training_step(self, batch, batch_idx):
-    # training_step defines the train loop.
-    # it is independent of forward
     x, y = batch
     x = x.view(x.size(0), -1)
     z = self.encoder(x)
@@ -27,33 +26,32 @@ class LitAutoEncoder(pl.LightningModule):
     self.log("train_loss", loss)
     return loss
 
+  # Adam is an adaptive learning rate
   def configure_optimizers(self):
     optimizer = optim.Adam(self.parameters(), lr=1e-3)
     return optimizer
 
-
-# init the autoencoder
 autoencoder = LitAutoEncoder(encoder, decoder)
 
-# setup data
+# Set up data
 dataset = MNIST(os.getcwd(), download=True, transform=ToTensor())
 train_loader = utils.data.DataLoader(dataset)
 
-# train the model (hint: here are some helpful Trainer arguments for rapid idea
-# iteration)
+# Train the model
 trainer = pl.Trainer(limit_train_batches=100, max_epochs=1)
 trainer.fit(model=autoencoder, train_dataloaders=train_loader)
 
-# load checkpoint
+# Load checkpoint
 checkpoint = "./lightning_logs/version_0/checkpoints/epoch=0-step=100.ckpt"
 autoencoder = LitAutoEncoder.load_from_checkpoint(checkpoint, encoder=encoder,
   decoder=decoder)
 
-# choose your trained nn.Module
+# Let's evaluate the encoder
+# (Can also evaluate decoder)
 encoder = autoencoder.encoder
 encoder.eval()
 
-# embed 4 fake images!
+# Embed 4 fake images!
 fake_image_batch = Tensor(4, 28 * 28)
 embeddings = encoder(fake_image_batch)
 print("⚡" * 20, "\nPredictions (4 image embeddings):\n", embeddings, "\n",
