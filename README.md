@@ -15,7 +15,7 @@ pip install -r requirements.txt
 
 ## Contribute
 
-## Update requirements
+### Update requirements
 
 ```bash
 pip freeze > requirements.txt
