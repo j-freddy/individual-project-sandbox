@@ -14,19 +14,3 @@ def setup_gpu():
     torch.backends.cudnn.benchmark = False
 
   return device
-
-if __name__=="__main__":
-  # Seed random
-  torch.manual_seed(1827)
-
-  # Use GPU if available
-  device = setup_gpu()
-
-  # Backpropagation
-  x = torch.arange(3, dtype=torch.float32, requires_grad=True)
-  # Push to device (used for GPU device)
-  x = x.to(device)
-  y = ((x + 2) ** 2 + 3).mean()
-
-  y.backward()
-  print(x.grad)
