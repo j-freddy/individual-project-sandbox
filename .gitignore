@@ -5,6 +5,9 @@ venv/
 data/
 MNIST/
 
+# Playground
+sandbox.py
+
 # Cache
 __pycache__/
 lightning_logs/
