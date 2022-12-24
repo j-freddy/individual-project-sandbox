@@ -1,10 +1,6 @@
 # Virtual environment
 venv/
 
-# Data
-data/
-MNIST/
-
 # Playground
 sandbox.py
 
