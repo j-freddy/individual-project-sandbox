@@ -133,6 +133,11 @@ if __name__=="__main__":
   # show_example_images()
 
   # Train model
+  # Max epochs reduced from 500 to 10 as training is long
   simclr_model = train_simclr(
-    batch_size=256, hidden_dim=128, lr=5e-4, temperature=0.07, weight_decay=1e-4, max_epochs=500
+    batch_size=256, hidden_dim=128, lr=5e-4, temperature=0.07, weight_decay=1e-4, max_epochs=10
   )
+
+  path = file_path = os.path.join(CHECKPOINT_PATH, "SimCLRFreddy.ckpt")
+  torch.save(simclr_model.state_dict(), path)
+  print("Done! :)")
