@@ -116,6 +116,8 @@ def train_simclr(batch_size, max_epochs=500, **kwargs):
   return model
 
 if __name__=="__main__":
+  print("Boom waddup solorenektononly here")
+
   init_visualisers()
   pl.seed_everything(42)
 
