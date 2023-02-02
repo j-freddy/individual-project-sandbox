@@ -1,5 +1,6 @@
 import os
 import torch
+import torch.utils.data as data
 from urllib.error import HTTPError
 import urllib.request
 
@@ -54,3 +55,9 @@ def download_pretrained_models():
         urllib.request.urlretrieve(file_url, file_path)
       except HTTPError as e:
         print(e)
+
+def get_smaller_dataset(original_dataset, num_imgs_per_label):
+  new_dataset = data.TensorDataset(
+    *(t.unflatten(0, (10, 500))[:, :num_imgs_per_label].flatten(0, 1) for t in original_dataset.tensors)
+  )
+  return new_dataset
