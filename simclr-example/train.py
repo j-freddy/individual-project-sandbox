@@ -26,10 +26,10 @@ def init_visualisers():
   sns.set()
 
 # Examples of augmented images
-def show_example_images():
+def show_example_images(data):
   NUM_IMAGES = 6
   imgs = torch.stack(
-    [img for idx in range(NUM_IMAGES) for img in unlabeled_data[idx][0]],
+    [img for idx in range(NUM_IMAGES) for img in data[idx][0]],
     dim=0
   )
   img_grid = torchvision.utils.make_grid(imgs, nrow=6, normalize=True,
@@ -116,8 +116,6 @@ def train_simclr(batch_size, max_epochs=500, **kwargs):
   return model
 
 if __name__=="__main__":
-  print("Boom waddup solorenektononly here")
-
   init_visualisers()
   pl.seed_everything(42)
 
@@ -132,7 +130,8 @@ if __name__=="__main__":
   train_data_contrast = loader.load_train()
   unlabeled_data = loader.load_unlabeled()
 
-  # show_example_images()
+  # show_example_images(train_data_contrast)
+  # show_example_images(unlabeled_data)
 
   # Train model
   # Max epochs reduced from 500 to 10 as training is long

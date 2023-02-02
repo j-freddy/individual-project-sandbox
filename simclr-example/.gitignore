@@ -1,2 +1,8 @@
 lightning_logs/
 data/
+
+# Ignore saved models
+saved-models/
+# Except following
+!SimCLRFreddy-train.out
+SimCLRFreddy.ckpt
