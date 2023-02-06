@@ -6,4 +6,4 @@ sandbox.py
 
 # Cache
 __pycache__/
-# lightning_logs/
+lightning_logs/

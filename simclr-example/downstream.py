@@ -111,13 +111,20 @@ if __name__=="__main__":
   print("Number of test examples:", len(test_img_data))
 
   # Get pretrained model
-  # pretrained_filename = os.path.join(CHECKPOINT_PATH, "SimCLRFreddy.ckpt")
-  pretrained_filename = os.path.join(CHECKPOINT_PATH, "SimCLR.ckpt")
+  pretrained_filename = os.path.join(CHECKPOINT_PATH, "SimCLRFreddy.ckpt")
+  # pretrained_filename = os.path.join(CHECKPOINT_PATH, "SimCLR.ckpt")
 
   if os.path.isfile(pretrained_filename):
     print(f"Found pretrained model at {pretrained_filename}, loading...")
     # Automatically loads the model with saved hyperparameters
-    simclr_model = SimCLR.load_from_checkpoint(pretrained_filename)
+    # simclr_model = SimCLR.load_from_checkpoint(pretrained_filename)
+
+    # TODO
+    # Temporary fix: load_from_checkpoint does not work
+    # Manually putting in hyperparameters (68883 = SimCLRFreddy.ckpt)
+    simclr_model = SimCLR(hidden_dim=128, lr=0.0005, max_epochs=50, temperature=0.07, weight_decay=0.0001)
+    checkpoint = torch.load(pretrained_filename)
+    simclr_model.load_state_dict(checkpoint)
   else:
     raise Exception("No model found.")
 
